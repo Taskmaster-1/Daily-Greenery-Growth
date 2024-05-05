@@ -10,12 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runner's shell
-      - name: Run commit script
+      - name: Set Git config
         run: |
-           git config --global user.name "${GITHUB_ACTOR}"
-           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-           git commit --allow-empty -m "Plant grass: $(date +'%Y-%m-%d %H:%M:%S')" 
-           git push origin master
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      
+      - name: Commit changes
+        run: |
+          git add .
+          git commit --allow-empty -m "Plant grass: $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin master
